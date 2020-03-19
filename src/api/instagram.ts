@@ -693,7 +693,7 @@ export class Instagram<PostType> {
      */
     private async constructPage() {
         // Browser args
-        const args = [];
+        const args = ["--no-sandbox", "--headless", "--disable-gpu", "--disable-dev-shm-usage"];
         if (process.env.NO_SANDBOX) {
             args.push("--no-sandbox");
             args.push("--disable-setuid-sandbox");
