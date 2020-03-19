@@ -8,4 +8,4 @@ RUN set -x \
   udev \
   ttf-freefont \
   chromium \
-  && yarn install puppeteer@1.19.0
+  && yarn add puppeteer@1.19.0
