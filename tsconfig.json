@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2018",
+        "outDir": "dist",
+        "noImplicitAny": false,
+        "inlineSourceMap": true,
+        "lib": [
+            "dom",
+            "es2018",
+            "esnext.asynciterable"
+        ],
+        "resolveJsonModule": true,
+        "esModuleInterop": true
+    },
+    "include": [
+        "*.ts",
+        "!*.d.ts",
+        "src/cli.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "tests/*",
+        "examples/*"
+    ]
+}

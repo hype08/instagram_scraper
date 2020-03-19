@@ -1,0 +1,11 @@
+.idea/
+node_modules/
+examples/node_modules/
+coverage/
+downloads/
+*.map
+*.js
+*.d.ts
+*.tgz
+*.log
+*.csv

@@ -1,0 +1,23 @@
+language: node_js
+node_js:
+  - "node"
+  - "lts/*"
+dist: bionic
+addons:
+  chrome: stable
+services:
+  - xvfb
+before_install:
+  # Enable user namespace cloning for pyppeteer
+  - sysctl kernel.unprivileged_userns_clone=1
+  # Launch XVFB for pyppeteer
+  - export DISPLAY=:99.0
+install:
+  - npm install -g codacy-coverage
+
+  # Install instamancer and deps
+  - npm install
+script:
+  - npm run build -- --noEmit
+  - npm run test:ci
+  - if [[ $TRAVIS_PULL_REQUEST = "false" ]] ; then cat ./coverage/lcov.info | codacy-coverage --language=typescript; fi
