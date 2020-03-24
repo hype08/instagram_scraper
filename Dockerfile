@@ -1,6 +1,7 @@
+# install linux 
 FROM alpine:edge
 
-# Installs latest Chromium (80) package.
+# installs Chromium 80 and other neccessary deps.
 RUN apk add --no-cache --update \
   chromium \
   nss \
@@ -12,22 +13,23 @@ RUN apk add --no-cache --update \
   nodejs \
   npm
 
-# set env
+# make puppeteer use chromium from /usr/bin instead of node_modules
 ENV CHROME_BIN="/usr/bin/chromium-browser" \
   PUPPETEER_SKIP_CHROMIUM_DOWNLOAD="true"
 
-# Create Directory for the Container
+# create Directory for the Container
 WORKDIR /usr/src/app
 
-# Copy all other source code to work directory
+# copy all other source code to work directory
 ADD . /usr/src/app
 
-# Install all Packages
+# install all Packages
 RUN npm install 
 
-# Compile TS
+# compile TypeSecript to JavaScript
 RUN npm run build
 
+# "npm install -g will install "instamancer" commmand locally.
 RUN npm install -g
 
-
+CMD [ "npm", "run", "start" ]
