@@ -1,10 +1,9 @@
-/* tslint:disable */
-
 import {IPlugin, IPluginContext} from "../plugin";
 import {createApi} from "../../src/api/api";
+import kinesisProducer from "../../src/http/kinesis-node/kinesisProducer";
 
 // list of users to be scraped
-import userList from "../../list/userList";
+import {userList} from "../../userList";
 
 type PageData = {entry_data: {ProfilePage: [{graphql: {user: {}}}]}};
 
@@ -16,6 +15,7 @@ export class UserData<PostType> implements IPlugin<PostType> {
     }
 
     constructionEvent(this: IPluginContext<UserData<PostType>, PostType>) {
+        // @ts-ignore
         console.log(this.state.id);
         const oldStart = this.state.start;
 
@@ -54,5 +54,5 @@ function cb(userName: string, userData: {}) {
         });
     }
     /* SEND PAYLOAD */
-    console.log(data);
+    kinesisProducer(data);
 })();
