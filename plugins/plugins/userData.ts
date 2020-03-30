@@ -1,6 +1,6 @@
 import {IPlugin, IPluginContext} from "../plugin";
 import {createApi} from "../../src/api/api";
-import kinesisProducer from "../../src/http/kinesis-node/kinesisProducer";
+import kinesisProducer from "../../src/http/kinesis-node/KinesisProducer";
 
 // list of users to be scraped
 import {userList} from "../../userList";
@@ -16,7 +16,7 @@ export class UserData<PostType> implements IPlugin<PostType> {
 
     constructionEvent(this: IPluginContext<UserData<PostType>, PostType>) {
         // @ts-ignore
-        console.log(this.state.id);
+        console.log("begin scraping: ", this.state.id);
         const oldStart = this.state.start;
 
         this.state.start = async () => {
@@ -48,11 +48,9 @@ function cb(userName: string, userData: {}) {
         });
         await user.start();
         await user.forceStop();
-
-        await new Promise((resolve) => {
-            setTimeout(resolve, 3000);
-        });
+        /* SEND SCRAPED DATA TO KINESIS PUT */
+        // @ts-ignore
+        console.log("sending to kinesis...", username);
+        await kinesisProducer(data);
     }
-    /* SEND PAYLOAD */
-    kinesisProducer(data);
 })();
